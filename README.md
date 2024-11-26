@@ -14,6 +14,7 @@ Docker is required to run LocalStack, a tool simulating AWS services locally.
 sudo apt update
 sudo apt install docker.io
 ```
+On windows install docker desktop from [here](https://docs.docker.com/desktop/windows/install/)
 
 2. Verify Docker installation:
 ```bash
@@ -28,6 +29,9 @@ curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip
 unzip awscliv2.zip
 sudo ./aws/install
 ```
+
+On windows : 
+got to [here](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html)
 
 4. Verify that the installation worked
 
@@ -48,9 +52,8 @@ Enter the following values:
 * Default output format: json
 
 6. Create LocalStack S3 buckets:
-
+Run localStack first
 ```bash
-Copier le code
 aws --endpoint-url=http://localhost:4566 s3 mb s3://raw
 aws --endpoint-url=http://localhost:4566 s3 mb s3://staging
 aws --endpoint-url=http://localhost:4566 s3 mb s3://curated
@@ -95,7 +98,7 @@ Move the dataset into a data/raw folder.
 Unpack the dataset into a single CSV file in the raw bucket:
 
 ```bash
-python src/unpack_data.py --input_dir data/raw --bucket_name raw --output_file_name combined_raw.csv
+python build/unpack_to_raw.py --input_dir data/raw --bucket_name raw --output_file_name combined_raw.csv
 ```
 
 Preprocess the data to clean, encode, split into train/dev/test, and compute class weights:
