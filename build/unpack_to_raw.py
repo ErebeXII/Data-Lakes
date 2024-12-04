@@ -23,6 +23,11 @@ def unpack_data(input_dir, bucket_name, output_file_name):
             for file_name in os.listdir(subfolder_path):
                 file_path = os.path.join(subfolder_path, file_name)
                 print(f"Reading {file_path}")
+                #if not file_name.endswith('.parquet'): # Skip non-Parquet files
+                if(not file_name.endswith('.parquet')):
+                    print(f"Skipping {file_name}")
+                    continue
+
                 data = pd.read_parquet(
                     file_path,
                     engine='pyarrow'

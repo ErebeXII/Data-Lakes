@@ -1,6 +1,6 @@
 import sqlite3
 # Connexion `a une base de donn´ees (ou cr´eation si elle n'existe pas)
-conn = sqlite3.connect('test.db')
+conn = sqlite3.connect('sqlite_DB.db')
 cursor = conn.cursor()
 # Cr´eation d'une table de test
 cursor.execute('CREATE TABLE IF NOT EXISTS test_table (id INTEGER PRIMARY KEY, value TEXT)')

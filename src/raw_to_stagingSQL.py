@@ -53,7 +53,7 @@ def connect_to_db(host, user, password, database):
     conn: Connection object to the MySQL database.
     cursor: Cursor object for executing SQL queries.
     """
-    conn = sqlite3.connect('test.db')
+    conn = sqlite3.connect('../sqlite_DB.db')
     cursor = conn.cursor()
     print(f"Connected to MySQL database '{database}' on host '{host}' as user '{user}'.")
     return conn, cursor
@@ -88,8 +88,9 @@ def check_data(cursor):
     Parameters:
     cursor: Cursor object for executing SQL queries.
     """
-    cursor.execute('SELECT * FROM texts')
+    cursor.execute('SELECT * FROM texts LIMIT 5')
     print(cursor.fetchall())
+    print("Number of rows in 'texts' table:", cursor.execute('SELECT COUNT(*) FROM texts').fetchone()[0])
 
 def close_connection(conn):
     """
