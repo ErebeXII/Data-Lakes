@@ -128,8 +128,8 @@ def prepare_data(bucket_name, input_file_name, output_file_name, host, user, pas
 if __name__ == "__main__":
     """
     Utilisateur : root
-• Mot de passe : root
-• Base de donn´ees : staging
+    • Mot de passe : root
+    • Base de données : staging
     """
     bucket_name = 'raw'
     input_file_name = 'combined_raw.csv'
