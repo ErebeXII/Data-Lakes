@@ -23,9 +23,9 @@ def unpack_data(input_dir, bucket_name, output_file_name):
             for file_name in os.listdir(subfolder_path):
                 file_path = os.path.join(subfolder_path, file_name)
                 print(f"Reading {file_path}")
-                data = pd.read_csv(
+                data = pd.read_parquet(
                     file_path,
-                    names=['sequence', 'family_accession', 'sequence_name', 'aligned_sequence', 'family_id']
+                    engine='pyarrow'
                 )
                 data_frames.append(data)
         else:
@@ -37,7 +37,7 @@ def unpack_data(input_dir, bucket_name, output_file_name):
         print("All files combined successfully.")
 
         # Save the combined data to a CSV file
-        combined_csv_path = f"/tmp/{output_file_name}"  # Save locally before uploading
+        combined_csv_path = f"{output_file_name}"  # Save locally before uploading
         combined_data.to_csv(combined_csv_path, index=False)
         print(f"Combined file saved locally at {combined_csv_path}.")
 
