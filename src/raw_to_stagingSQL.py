@@ -35,8 +35,10 @@ def clean_data(input_file_name, output_file_name):
     output_file_name (str): Name of the output CSV file.
     """
     data = pd.read_csv(input_file_name)
-    cleaned_data = data.drop_duplicates().dropna()
-    cleaned_data.to_csv(output_file_name, index=False)
+    #split the data by \n
+    cleaned_data = data.text.str.split('\n').explode().reset_index(drop=True)
+    cleaned = cleaned_data.drop_duplicates().dropna()
+    cleaned.to_csv(output_file_name, index=False)
     print(f"Cleaned data saved to '{output_file_name}'.")
 
 def connect_to_db(host, user, password, database):
