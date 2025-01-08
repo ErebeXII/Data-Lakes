@@ -34,3 +34,9 @@ LocalStack (pour simuler S3)
 * Suivez le sujet du TP5 pour récupérer des données depuis l'API de HackerNews
 * Pour le faire vous avez 3 scripts à remplir : src/hn_api.py, src/es_handler.py, et dags/hackernews_dag.py
 * Vous pouvez vous inspirer de l'exemple du TP4 pour faire fonctionner votre DAG
+
+## TP5 
+Pour accéder à la page airflow : (http://localhost:8081/)[here]
+id : airflow
+mdp : airflow
+
