@@ -1,26 +1,44 @@
+vars:
+  - params.yaml
+
 stages:
-  start_localstack:
-    cmd: bash scripts/start_localstack.sh
-    outs:
-      - localstack_running.log  # Track the state of the container to ensure this stage runs only when needed
-
-  unpack:
-    cmd: # HINT: Specify the command to run unpack_data.py
+  unpack_to_raw:
+    cmd: >
+      python build/unpack_to_raw.py 
+      --output-dir data/raw 
+      --endpoint-url http://localhost:4566
     deps:
-      # HINT: List dependencies here, such as the script file and input data
+      - build/unpack_to_raw.py
+      - params.yaml
     outs:
-      # HINT: Define the output location in the raw S3 bucket for combined_raw.csv
-
-  preprocess:
-    cmd: # HINT: Specify the command to run preprocess_to_staging.py
+      - data/raw
+      
+  preprocess_to_staging:
+    cmd: >
+      python src/preprocess_to_staging.py 
+      --bucket_raw raw 
+      --db_host localhost 
+      --db_user root 
+      --db_password root 
+      --endpoint-url http://localhost:4566
     deps:
-      # HINT: List dependencies here, such as the script file and the raw S3 bucket file
+      - src/preprocess_to_staging.py
+      - data/raw
+      - params.yaml
     outs:
-      # HINT: Define the output locations in the staging S3 bucket for train, dev, and test splits
+      - ${staging_data}:
+          cache: false
 
-  process:
-    cmd: # HINT: Specify the command to run process_to_curated.py
+  process_to_curated:
+    cmd: >
+      python src/process_to_curated.py 
+      --mysql_host localhost 
+      --mysql_user root 
+      --mysql_password root 
+      --mongo_uri mongodb://localhost:27017/
     deps:
-      # HINT: List dependencies here, such as the script file and the staging S3 bucket files
+      - src/process_to_curated.py
+      - params.yaml
     outs:
-      # HINT: Define the output location in the curated S3 bucket for tokenized_train.csv
+      - ${curated_data}:
+          cache: false
